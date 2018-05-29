@@ -204,10 +204,12 @@ CREATE TABLE `tb_second_category` (
 DROP TABLE IF EXISTS `tb_second_privilege`;
 
 CREATE TABLE `tb_second_privilege` (
-  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '一级权限ID',
-  `name` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '一级权限名称',
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '二级权限ID',
+  `name` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '二级权限名称',
   `icon_url` varchar(500) COLLATE utf8_bin DEFAULT NULL COMMENT '权限图标',
   `sequence` int(11) DEFAULT NULL COMMENT '出现次序',
+  `has_child` int(1) DEFAULT NULL COMMENT '是否存在子权限，0表示没有，1表示有',
+  `func_url` varchar(200) COLLATE utf8_bin DEFAULT NULL COMMENT '请求路径',
   `note` varchar(500) COLLATE utf8_bin DEFAULT NULL COMMENT '权限说明',
   `top_privilege_id` int(11) DEFAULT NULL COMMENT '所属一级权限，外键',
   `add_time` datetime DEFAULT NULL COMMENT '添加时间',
@@ -271,6 +273,25 @@ CREATE TABLE `tb_super_user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='雇主表，每个雇主的超级管理员登录';
 
+/*Table structure for table `tb_third_privilege` */
+
+DROP TABLE IF EXISTS `tb_third_privilege`;
+
+CREATE TABLE `tb_third_privilege` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '三级权限ID',
+  `name` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '三级权限名称',
+  `icon_url` varchar(500) COLLATE utf8_bin DEFAULT NULL COMMENT '权限图标',
+  `sequence` int(11) DEFAULT NULL COMMENT '出现次序',
+  `has_child` int(1) DEFAULT NULL COMMENT '是否存在子权限，0',
+  `func_url` varchar(200) COLLATE utf8_bin DEFAULT NULL COMMENT '请求路径',
+  `note` varchar(500) COLLATE utf8_bin DEFAULT NULL COMMENT '权限说明',
+  `second_privilege_id` int(11) DEFAULT NULL COMMENT '所属二级权限，外键',
+  `add_time` datetime DEFAULT NULL COMMENT '添加时间',
+  `opt_time` datetime DEFAULT NULL COMMENT '操作时间',
+  `opt_usercode` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '操作人，外键',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 /*Table structure for table `tb_top_category` */
 
 DROP TABLE IF EXISTS `tb_top_category`;
@@ -298,6 +319,8 @@ CREATE TABLE `tb_top_privilege` (
   `name` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '一级权限名称',
   `icon_url` varchar(500) COLLATE utf8_bin DEFAULT NULL COMMENT '权限图标',
   `sequence` int(11) DEFAULT NULL COMMENT '出现次序',
+  `has_child` int(1) DEFAULT NULL COMMENT '是否存在子权限，0表示不存在，1表示存在',
+  `func_url` varchar(200) COLLATE utf8_bin DEFAULT NULL COMMENT '如果不存在子权限，则保存请求路径',
   `note` varchar(500) COLLATE utf8_bin DEFAULT NULL COMMENT '权限说明',
   `add_time` datetime DEFAULT NULL COMMENT '添加时间',
   `opt_time` datetime DEFAULT NULL COMMENT '操作时间',
