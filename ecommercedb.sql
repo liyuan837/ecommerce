@@ -1,6 +1,6 @@
 /*
 SQLyog Ultimate v8.32 
-MySQL - 5.6.33 : Database - ecommercedb
+MySQL - 5.7.21 : Database - ecommercedb
 *********************************************************************
 */
 
@@ -25,6 +25,8 @@ CREATE TABLE `product_category_relation` (
   `second_category_id` int(11) DEFAULT NULL COMMENT '商品所述二级分类，外键',
   PRIMARY KEY (`product_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='商品 和 二级分类 的关联表';
+
+/*Data for the table `product_category_relation` */
 
 /*Table structure for table `tb_buyer_user` */
 
@@ -60,6 +62,8 @@ CREATE TABLE `tb_buyer_user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='买家用户表';
 
+/*Data for the table `tb_buyer_user` */
+
 /*Table structure for table `tb_cart` */
 
 DROP TABLE IF EXISTS `tb_cart`;
@@ -78,20 +82,36 @@ CREATE TABLE `tb_cart` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='购物车表';
 
+/*Data for the table `tb_cart` */
+
 /*Table structure for table `tb_master` */
 
 DROP TABLE IF EXISTS `tb_master`;
 
 CREATE TABLE `tb_master` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '雇主用户ID，主键',
-  `mastercode` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '雇主编号，外键 关联到user表',
-  `nickname` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '昵称',
-  `header_url` varchar(200) COLLATE utf8_bin DEFAULT NULL COMMENT '头像路径',
-  `name` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '姓名',
-  `phone` varchar(20) COLLATE utf8_bin DEFAULT NULL COMMENT '手机号',
-  `state` int(1) DEFAULT NULL COMMENT '用户状态',
+  `mastercode` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '雇主编号',
+  `countryname` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '姓名',
+  `countrylogo` varchar(200) COLLATE utf8_bin DEFAULT NULL COMMENT '雇主logo',
+  `usercode` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '雇主编号，外键关联到tb_master_user表的usercode',
+  `country` varchar(50) COLLATE utf8_bin DEFAULT NULL COMMENT '所在国家',
+  `province` varchar(50) COLLATE utf8_bin DEFAULT NULL COMMENT '所在省份',
+  `district` varchar(50) COLLATE utf8_bin DEFAULT NULL COMMENT '所在区',
+  `city` varchar(50) COLLATE utf8_bin DEFAULT NULL COMMENT '所在城市',
+  `street` varchar(50) COLLATE utf8_bin DEFAULT NULL COMMENT '所在街道',
+  `specific_address` varchar(200) COLLATE utf8_bin DEFAULT NULL COMMENT '详细地址',
+  `longitude` decimal(12,6) DEFAULT NULL COMMENT '所在经度',
+  `latitude` decimal(12,6) DEFAULT NULL COMMENT '所在纬度',
+  `last_login_time` datetime DEFAULT NULL COMMENT '最后一次登陆时间',
+  `last_login_ip` varchar(50) COLLATE utf8_bin DEFAULT NULL COMMENT '最后一次登录IP',
+  `state` int(1) DEFAULT NULL COMMENT '公司状态',
+  `add_time` datetime DEFAULT NULL COMMENT '创建时间',
+  `opt_time` datetime DEFAULT NULL COMMENT '操作时间',
+  `opt_usercode` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '操作人',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='雇主表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='店铺表';
+
+/*Data for the table `tb_master` */
 
 /*Table structure for table `tb_master_user` */
 
@@ -105,8 +125,14 @@ CREATE TABLE `tb_master_user` (
   `name` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '姓名',
   `phone` varchar(20) COLLATE utf8_bin DEFAULT NULL COMMENT '手机号',
   `state` int(1) DEFAULT NULL COMMENT '用户状态',
+  `add_time` datetime DEFAULT NULL COMMENT '添加时间',
+  `opt_time` datetime DEFAULT NULL COMMENT '操作时间',
+  `opt_usercode` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '操作人，外键',
+  `mastercode` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '所属雇主公司',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='雇主管理员表';
+
+/*Data for the table `tb_master_user` */
 
 /*Table structure for table `tb_product` */
 
@@ -129,7 +155,9 @@ CREATE TABLE `tb_product` (
   `shopcode` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '所属店铺，外键',
   `mastercode` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '所属雇主，外键',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='商品表（主）';
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='商品表（主）';
+
+/*Data for the table `tb_product` */
 
 /*Table structure for table `tb_product_banner` */
 
@@ -145,6 +173,8 @@ CREATE TABLE `tb_product_banner` (
   `opt_usercode` varchar(100) COLLATE utf8_bin DEFAULT NULL,
   PRIMARY KEY (`product_code`,`banner_sequence`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='商品轮播图表（商品副表）';
+
+/*Data for the table `tb_product_banner` */
 
 /*Table structure for table `tb_product_detail` */
 
@@ -163,6 +193,8 @@ CREATE TABLE `tb_product_detail` (
   PRIMARY KEY (`product_code`,`detail_sequence`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='商品细节表（商品副表）';
 
+/*Data for the table `tb_product_detail` */
+
 /*Table structure for table `tb_product_extend` */
 
 DROP TABLE IF EXISTS `tb_product_extend`;
@@ -175,6 +207,8 @@ CREATE TABLE `tb_product_extend` (
   `opt_usercode` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '操作者，外键',
   PRIMARY KEY (`product_code`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='商品表的扩充表';
+
+/*Data for the table `tb_product_extend` */
 
 /*Table structure for table `tb_product_param` */
 
@@ -191,6 +225,8 @@ CREATE TABLE `tb_product_param` (
   PRIMARY KEY (`product_code`,`param_sequence`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='商品参数表（商品副表）';
 
+/*Data for the table `tb_product_param` */
+
 /*Table structure for table `tb_product_spec` */
 
 DROP TABLE IF EXISTS `tb_product_spec`;
@@ -206,6 +242,8 @@ CREATE TABLE `tb_product_spec` (
   `opt_usercode` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '操作人，外键',
   PRIMARY KEY (`product_code`,`spec_sequence`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='商品规格表（商品副表）';
+
+/*Data for the table `tb_product_spec` */
 
 /*Table structure for table `tb_second_category` */
 
@@ -226,6 +264,8 @@ CREATE TABLE `tb_second_category` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='商品二级分类';
 
+/*Data for the table `tb_second_category` */
+
 /*Table structure for table `tb_second_privilege` */
 
 DROP TABLE IF EXISTS `tb_second_privilege`;
@@ -244,6 +284,8 @@ CREATE TABLE `tb_second_privilege` (
   `opt_usercode` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '操作人，外键',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+/*Data for the table `tb_second_privilege` */
 
 /*Table structure for table `tb_shop` */
 
@@ -272,6 +314,8 @@ CREATE TABLE `tb_shop` (
   `mastercode` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '店铺所属雇主',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='店铺表';
+
+/*Data for the table `tb_shop` */
 
 /*Table structure for table `tb_shop_user` */
 
@@ -307,6 +351,8 @@ CREATE TABLE `tb_shop_user` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='店员表';
 
+/*Data for the table `tb_shop_user` */
+
 /*Table structure for table `tb_super_user` */
 
 DROP TABLE IF EXISTS `tb_super_user`;
@@ -321,6 +367,8 @@ CREATE TABLE `tb_super_user` (
   `state` int(1) DEFAULT NULL COMMENT '用户状态',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='超级管理员表';
+
+/*Data for the table `tb_super_user` */
 
 /*Table structure for table `tb_third_privilege` */
 
@@ -341,6 +389,8 @@ CREATE TABLE `tb_third_privilege` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+/*Data for the table `tb_third_privilege` */
+
 /*Table structure for table `tb_top_category` */
 
 DROP TABLE IF EXISTS `tb_top_category`;
@@ -358,6 +408,8 @@ CREATE TABLE `tb_top_category` (
   `master_usercode` varchar(100) COLLATE utf8_bin DEFAULT NULL COMMENT '所属雇主，外键',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
+/*Data for the table `tb_top_category` */
 
 /*Table structure for table `tb_top_privilege` */
 
@@ -377,6 +429,8 @@ CREATE TABLE `tb_top_privilege` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+/*Data for the table `tb_top_privilege` */
+
 /*Table structure for table `tb_user` */
 
 DROP TABLE IF EXISTS `tb_user`;
@@ -391,6 +445,8 @@ CREATE TABLE `tb_user` (
   `state` int(11) DEFAULT NULL COMMENT '用户状态',
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin COMMENT='用户总表';
+
+/*Data for the table `tb_user` */
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
 /*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
