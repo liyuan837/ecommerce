@@ -1,0 +1,432 @@
+/*
+SQLyog Ultimate v8.32 
+MySQL - 5.7.21 : Database - ecommercedb
+*********************************************************************
+*/
+
+/*!40101 SET NAMES utf8 */;
+
+/*!40101 SET SQL_MODE=''*/;
+
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/`ecommercedb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_bin */;
+
+USE `ecommercedb`;
+
+/*Table structure for table `tb_back_category` */
+
+DROP TABLE IF EXISTS `tb_back_category`;
+
+CREATE TABLE `tb_back_category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '分类名称',
+  `type` int(11) DEFAULT NULL COMMENT '分类类型，1平台，2商家',
+  `order_num` int(11) DEFAULT NULL COMMENT '同级分类中的排序值',
+  `remarks` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '备注',
+  `dept_num` int(11) DEFAULT NULL COMMENT '分类深度',
+  `product_model_id` int(11) DEFAULT NULL COMMENT '所属产品模型',
+  `parent_id` int(11) DEFAULT NULL COMMENT '父级分类',
+  `company_id` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '商家id',
+  `state` int(11) DEFAULT NULL COMMENT '状态',
+  `is_delete` int(1) DEFAULT NULL COMMENT '是否删除，1是0否',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='后端分类表';
+
+/*Data for the table `tb_back_category` */
+
+/*Table structure for table `tb_company` */
+
+DROP TABLE IF EXISTS `tb_company`;
+
+CREATE TABLE `tb_company` (
+  `id` varchar(50) COLLATE utf8mb4_bin NOT NULL COMMENT '主键，平台也属于商家，给定特定编号',
+  `company_code` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '企业编号',
+  `company_name` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '企业名称',
+  `phone` varchar(20) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '联系人手机号',
+  `real_name` varchar(20) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '联系人真实姓名',
+  `idcard` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '联系人身份证',
+  `idcard_img_fore` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '身份证正面',
+  `idcard_img_back` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '身份证反面',
+  `email` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '邮箱',
+  `qq` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'qq',
+  `wechat` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '微信',
+  `weibo` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '微博',
+  `company_logo` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '企业logo',
+  `licence_img` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '营业执照',
+  `licence_code` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '统一社会信用代码',
+  `company_page` varchar(200) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '企业主页',
+  `address_province` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '企业位置',
+  `address_city` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '企业位置',
+  `address_distinct` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '企业位置',
+  `address_detail` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '企业位置',
+  `company_profile` varchar(1000) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '企业介绍',
+  `company_quality` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '企业性质',
+  `business_scope` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '经营范围',
+  `state` int(11) DEFAULT NULL COMMENT '业务状态，0待审核，1审核通过，-1审核未通过',
+  `is_delete` int(1) DEFAULT NULL COMMENT '是否已删除，1是，0否',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+/*Data for the table `tb_company` */
+
+/*Table structure for table `tb_consumer` */
+
+DROP TABLE IF EXISTS `tb_consumer`;
+
+CREATE TABLE `tb_consumer` (
+  `id` int(11) NOT NULL COMMENT '主键，C开头',
+  `consumer_code` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '消费者编号',
+  `nick_name` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '昵称，可用作登录名',
+  `real_name` varchar(20) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '真实姓名',
+  `phone` varchar(20) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '手机号，可用作登录名',
+  `password` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '登录密码，加密',
+  `sex` int(1) DEFAULT NULL COMMENT '性别，0未知，1男，2女',
+  `header_img` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '头像',
+  `qrcode_img` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '二维码',
+  `bonus_points` int(11) DEFAULT NULL COMMENT '积分值',
+  `experience_value` int(11) DEFAULT NULL COMMENT '经验值',
+  `member_level_id` int(11) DEFAULT NULL COMMENT '会员等级',
+  `personal_profile` varchar(1000) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '个人简介',
+  `last_login_ip` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '最后一次登录IP',
+  `last_login_time` datetime DEFAULT NULL COMMENT '最后一次登陆时间',
+  `state` int(11) DEFAULT NULL COMMENT '状态，1账号正常',
+  `is_delete` int(1) DEFAULT NULL COMMENT '是否删除，1是0否',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+/*Data for the table `tb_consumer` */
+
+/*Table structure for table `tb_consumer_extend` */
+
+DROP TABLE IF EXISTS `tb_consumer_extend`;
+
+CREATE TABLE `tb_consumer_extend` (
+  `consumer_id` int(11) NOT NULL COMMENT '主键，关联消费者主表',
+  `birthday` datetime DEFAULT NULL COMMENT '生日',
+  `age` int(11) DEFAULT NULL COMMENT '年龄',
+  `idcard` varchar(20) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '身份证号',
+  `idcard_img_fore` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '身份证正面',
+  `idcard_img_back` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '身份证反面',
+  `email` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '邮箱',
+  `address_province` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '居住地',
+  `address_city` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '居住地',
+  `address_distinct` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '居住地',
+  `address_detail` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '居住地',
+  `recommender_id` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '推荐人',
+  `company_id` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '所属商家',
+  PRIMARY KEY (`consumer_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+/*Data for the table `tb_consumer_extend` */
+
+/*Table structure for table `tb_fore_category` */
+
+DROP TABLE IF EXISTS `tb_fore_category`;
+
+CREATE TABLE `tb_fore_category` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '分类名称',
+  `type` int(11) DEFAULT NULL COMMENT '分类类型，1平台，2商家',
+  `order_num` int(11) DEFAULT NULL COMMENT '同级分类中的排序值',
+  `remarks` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '备注',
+  `dept_num` int(11) DEFAULT NULL COMMENT '分类深度',
+  `product_model_id` int(11) DEFAULT NULL COMMENT '所属产品模型',
+  `state` int(11) DEFAULT NULL COMMENT '状态',
+  `is_delete` int(1) DEFAULT NULL COMMENT '是否删除，1是0否',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='后端分类表';
+
+/*Data for the table `tb_fore_category` */
+
+/*Table structure for table `tb_goods_param` */
+
+DROP TABLE IF EXISTS `tb_goods_param`;
+
+CREATE TABLE `tb_goods_param` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '参数名',
+  `value` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '参数值',
+  `order_num` int(11) DEFAULT NULL COMMENT '排序值',
+  `remarks` varchar(1000) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '备注',
+  `spu_id` int(11) DEFAULT NULL COMMENT '所属货品id',
+  `is_tag` int(1) DEFAULT NULL COMMENT '是否是吊牌标签',
+  `state` int(11) DEFAULT NULL COMMENT '状态',
+  `is_delete` int(1) DEFAULT NULL COMMENT '是否删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+/*Data for the table `tb_goods_param` */
+
+/*Table structure for table `tb_goods_unit` */
+
+DROP TABLE IF EXISTS `tb_goods_unit`;
+
+CREATE TABLE `tb_goods_unit` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '货品名',
+  `spu_code` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '货品spu编号',
+  `logo_url` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '货品logo',
+  `remarks` varbinary(1000) DEFAULT NULL COMMENT '备注',
+  `min_price` decimal(10,2) DEFAULT NULL COMMENT '最小价格',
+  `max_price` decimal(10,2) DEFAULT NULL COMMENT '最大价格',
+  `sales_volume` int(11) DEFAULT NULL COMMENT '销量',
+  `stock` int(11) DEFAULT NULL COMMENT '库存',
+  `click_num` int(11) DEFAULT NULL COMMENT '点击量',
+  `is_hot` int(1) DEFAULT NULL COMMENT '是否热门',
+  `is_new` int(1) DEFAULT NULL COMMENT '是否新品',
+  `brand_id` int(11) DEFAULT NULL COMMENT '所属品牌id',
+  `back_category_id` int(11) DEFAULT NULL COMMENT '所属分类id',
+  `state` int(11) DEFAULT NULL COMMENT '状态',
+  `is_delete` int(1) DEFAULT NULL COMMENT '是否删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+/*Data for the table `tb_goods_unit` */
+
+/*Table structure for table `tb_member_level` */
+
+DROP TABLE IF EXISTS `tb_member_level`;
+
+CREATE TABLE `tb_member_level` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `level_value` varchar(20) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '等级值',
+  `level_name` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '登记名称',
+  `min_experience_value` int(11) DEFAULT NULL COMMENT '最小经验值',
+  `max_experience_value` int(11) DEFAULT NULL COMMENT '最大经验值',
+  `state` int(11) DEFAULT NULL COMMENT '状态，1启用，0禁用',
+  `is_delete` int(1) DEFAULT NULL COMMENT '是否删除，1是0否',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+/*Data for the table `tb_member_level` */
+
+/*Table structure for table `tb_model_property_ref` */
+
+DROP TABLE IF EXISTS `tb_model_property_ref`;
+
+CREATE TABLE `tb_model_property_ref` (
+  `product_model_id` int(11) NOT NULL COMMENT '产品模型id',
+  `product_property_id` int(11) NOT NULL COMMENT '属性id',
+  PRIMARY KEY (`product_model_id`,`product_property_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+/*Data for the table `tb_model_property_ref` */
+
+/*Table structure for table `tb_product_banner` */
+
+DROP TABLE IF EXISTS `tb_product_banner`;
+
+CREATE TABLE `tb_product_banner` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `title` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '轮播图标题',
+  `url` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '图片路径',
+  `order_num` int(11) DEFAULT NULL COMMENT '排序值',
+  `remarks` varchar(1000) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '备注',
+  `spu_id` int(11) DEFAULT NULL COMMENT '货品spu id',
+  `state` int(11) DEFAULT NULL COMMENT '状态',
+  `is_delete` int(1) DEFAULT NULL COMMENT '是否删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+/*Data for the table `tb_product_banner` */
+
+/*Table structure for table `tb_product_brand` */
+
+DROP TABLE IF EXISTS `tb_product_brand`;
+
+CREATE TABLE `tb_product_brand` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '品牌名称',
+  `logo_url` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '品牌logo',
+  `type` int(11) DEFAULT NULL COMMENT '品牌类型，1平台， 2商家',
+  `company_id` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '所属商家id',
+  `remarks` varchar(1000) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '备注',
+  `order_num` int(11) DEFAULT NULL COMMENT '排序值',
+  `state` int(11) DEFAULT NULL COMMENT '状态',
+  `is_delete` int(1) DEFAULT NULL COMMENT '是否删除',
+  `parent_id` int(11) DEFAULT NULL COMMENT '父级品牌',
+  `is_hot` int(1) DEFAULT NULL COMMENT '是否热门',
+  `dept_num` int(11) DEFAULT NULL COMMENT '深度值',
+  `back_category_id` int(11) DEFAULT NULL COMMENT '所属分类id',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+/*Data for the table `tb_product_brand` */
+
+/*Table structure for table `tb_product_detail` */
+
+DROP TABLE IF EXISTS `tb_product_detail`;
+
+CREATE TABLE `tb_product_detail` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `title` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '细节标题',
+  `content` varchar(1000) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '细节内容',
+  `url` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '细节图',
+  `order_num` int(11) DEFAULT NULL COMMENT '排序值',
+  `remarks` varchar(1000) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '备注',
+  `spu_id` int(11) DEFAULT NULL COMMENT '所属货品Id',
+  `state` int(11) DEFAULT NULL COMMENT '状态',
+  `is_delete` int(1) DEFAULT NULL COMMENT '是否删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+/*Data for the table `tb_product_detail` */
+
+/*Table structure for table `tb_product_model` */
+
+DROP TABLE IF EXISTS `tb_product_model`;
+
+CREATE TABLE `tb_product_model` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `model_code` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '模型编号',
+  `name` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '模型名',
+  `remarks` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '备注',
+  `state` int(11) DEFAULT NULL COMMENT '状态',
+  `is_delete` int(1) DEFAULT NULL COMMENT '是否删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+/*Data for the table `tb_product_model` */
+
+/*Table structure for table `tb_product_price` */
+
+DROP TABLE IF EXISTS `tb_product_price`;
+
+CREATE TABLE `tb_product_price` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `sku_id` int(11) DEFAULT NULL COMMENT '所属skuid',
+  `price_name` decimal(10,2) DEFAULT NULL COMMENT '价格名',
+  `price` decimal(10,2) DEFAULT NULL COMMENT '价格值',
+  `remarks` varchar(1000) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '备注',
+  `state` int(11) DEFAULT NULL COMMENT '状态',
+  `is_delete` int(1) DEFAULT NULL COMMENT '是否删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+/*Data for the table `tb_product_price` */
+
+/*Table structure for table `tb_product_property` */
+
+DROP TABLE IF EXISTS `tb_product_property`;
+
+CREATE TABLE `tb_product_property` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '属性名',
+  `type` int(11) DEFAULT NULL COMMENT '类型，1规格属性，2基本属性',
+  `remarks` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '备注',
+  `state` int(11) DEFAULT NULL COMMENT '状态',
+  `is_delete` int(1) DEFAULT NULL COMMENT '是否删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+/*Data for the table `tb_product_property` */
+
+/*Table structure for table `tb_product_property_value` */
+
+DROP TABLE IF EXISTS `tb_product_property_value`;
+
+CREATE TABLE `tb_product_property_value` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `property_id` int(11) DEFAULT NULL COMMENT '属性id',
+  `property_value` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '属性值',
+  `remarks` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '备注',
+  `state` int(11) DEFAULT NULL COMMENT '状态',
+  `is_delete` int(1) DEFAULT NULL COMMENT '是否删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+/*Data for the table `tb_product_property_value` */
+
+/*Table structure for table `tb_product_unit` */
+
+DROP TABLE IF EXISTS `tb_product_unit`;
+
+CREATE TABLE `tb_product_unit` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT '主键',
+  `name` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'sku产品名',
+  `sku_code` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'sku编号',
+  `logo_url` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '产品logo',
+  `origin_price` decimal(10,2) DEFAULT NULL COMMENT '原价',
+  `price` decimal(10,2) DEFAULT NULL COMMENT '售价',
+  `sales_volume` int(11) DEFAULT NULL COMMENT '销量',
+  `stock` int(11) DEFAULT NULL COMMENT '库存',
+  `remarks` varchar(1000) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '备注',
+  `property_json` varchar(2000) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '规格属性json值',
+  `spu_id` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '所属spu货品id',
+  `state` int(11) DEFAULT NULL COMMENT '业务状态',
+  `is_delete` int(1) DEFAULT NULL COMMENT '是否删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='库存量单位sku';
+
+/*Data for the table `tb_product_unit` */
+
+/*Table structure for table `tb_store` */
+
+DROP TABLE IF EXISTS `tb_store`;
+
+CREATE TABLE `tb_store` (
+  `id` varchar(50) COLLATE utf8mb4_bin NOT NULL COMMENT '主键',
+  `store_code` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '店铺编号',
+  `store_name` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '店铺名称',
+  `phone` varchar(20) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '联系人手机号',
+  `real_name` varchar(20) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '联系人真实姓名',
+  `type` int(2) DEFAULT NULL COMMENT '门店类型，1商家，2自营',
+  `company_ic` int(11) DEFAULT NULL COMMENT '所属商家id',
+  `idcard` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '联系人身份证',
+  `idcard_img_fore` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '身份证正面',
+  `idcard_img_back` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '身份证反面',
+  `email` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '邮箱',
+  `qq` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT 'qq',
+  `wechat` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '微信',
+  `store_logo` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '店铺logo',
+  `licence_img` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '营业执照',
+  `licence_code` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '统一社会信用代码',
+  `address_province` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '门店地址',
+  `address_city` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '门店地址',
+  `address_distinct` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '门店地址',
+  `address_detail` varchar(100) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '门店地址',
+  `store_profile` varchar(1000) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '门店介绍',
+  `business_scope` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '经营范围',
+  `company_id` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '所属商家',
+  `state` int(11) DEFAULT NULL COMMENT '业务状态，0待审核，1审核通过，-1审核不通过',
+  `is_delete` int(1) DEFAULT NULL COMMENT '是否已删除，1是，0否',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin;
+
+/*Data for the table `tb_store` */
+
+/*Table structure for table `tb_user` */
+
+DROP TABLE IF EXISTS `tb_user`;
+
+CREATE TABLE `tb_user` (
+  `id` varchar(50) COLLATE utf8mb4_bin NOT NULL COMMENT '主键',
+  `user_code` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '用户编号',
+  `nick_name` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '昵称，可用作登录验证',
+  `real_name` varchar(20) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '真实姓名',
+  `phone` varchar(20) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '手机号，可用作登录验证',
+  `password` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '登录密码',
+  `sex` int(2) DEFAULT NULL COMMENT '性别，0未知，1男2女',
+  `birthday` datetime DEFAULT NULL COMMENT '生日',
+  `age` int(11) DEFAULT NULL COMMENT '年龄',
+  `header_img` varchar(500) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '头像',
+  `user_type` int(11) DEFAULT NULL COMMENT '用户类型，1平台人员，2商家人员，3店铺人员',
+  `user_role_id` int(11) DEFAULT NULL COMMENT '用户角色id',
+  `last_login_time` datetime DEFAULT NULL COMMENT '最后一次登陆时间',
+  `last_login_ip` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '最后一次登录IP',
+  `company_id` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '所属商家',
+  `store_id` varchar(50) COLLATE utf8mb4_bin DEFAULT NULL COMMENT '所属店铺',
+  `state` int(11) DEFAULT NULL COMMENT '状态',
+  `is_delete` int(1) DEFAULT NULL COMMENT '是否删除',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_bin COMMENT='后台用户表';
+
+/*Data for the table `tb_user` */
+
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
